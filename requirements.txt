@@ -1,0 +1,5 @@
+pyrogram
+tgcrypto
+googletrans==4.0.0rc1
+langdetect
+pyspellchecker
