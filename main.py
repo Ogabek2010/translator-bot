@@ -1,83 +1,18 @@
-import os
 from pyrogram import Client, filters
-from googletrans import Translator
-from langdetect import detect
-from spellchecker import SpellChecker
 
-BOT_TOKEN = os.environ.get("BOT_TOKEN")
-API_ID = int(os.environ.get("API_ID"))
-API_HASH = os.environ.get("API_HASH")
+api_id = 20144930
+api_hash = "0a04d149799c0c27fba56c8e78264186"
+bot_token = "7890292688:AAGYkChpC4plamOMMdkttWx_w76WqE0Ba8A"
 
-app = Client("translator_bot", bot_token=BOT_TOKEN, api_id=API_ID, api_hash=API_HASH)
-translator = Translator()
-spell = SpellChecker()
+app = Client(
+    "music_bot",
+    api_id=api_id,
+    api_hash=api_hash,
+    bot_token=bot_token
+)
 
 @app.on_message(filters.command("start"))
-async def start(client, message):
-    await message.reply(
-        "👋 Salom! Men avtomatik tarjimon botman.\n\n"
-        "✏️ Xabar yuboring — men uni tilini aniqlab, o‘zbek, rus va ingliz tillariga tarjima qilib beraman.\n"
-        "✅ Imlo xatolarini ham to‘g‘rilab yuboraman."
-    )
-
-@app.on_message(filters.text & ~filters.command("start"))
-async def translate(client, message):
-    text = message.text
-    try:
-        lang = detect(text)
-    except:
-        return await message.reply("Tilni aniqlay olmadim. Iltimos, aniqroq yozing.")
-
-    corrected_words = [spell.correction(w) for w in text.split()]
-    corrected_text = " ".join(corrected_words)
-
-    result = ""
-    for target_lang in ["uz", "en", "ru"]:
-        if lang != target_lang:
-            translated = translator.translate(corrected_text, src=lang, dest=target_lang)
-            result += f"✏️ {target_lang.upper()}:\n{translated.text}\n\n"
-
-    await message.reply(result.strip())
-
-app.run()import os
-from pyrogram import Client, filters
-from googletrans import Translator
-from langdetect import detect
-from spellchecker import SpellChecker
-
-BOT_TOKEN = os.environ.get("BOT_TOKEN")
-API_ID = int(os.environ.get("API_ID"))
-API_HASH = os.environ.get("API_HASH")
-
-app = Client("translator_bot", bot_token=BOT_TOKEN, api_id=API_ID, api_hash=API_HASH)
-translator = Translator()
-spell = SpellChecker()
-
-@app.on_message(filters.command("start"))
-async def start(client, message):
-    await message.reply(
-        "👋 Salom! Men avtomatik tarjimon botman.\n\n"
-        "✏️ Xabar yuboring — men uni tilini aniqlab, o‘zbek, rus va ingliz tillariga tarjima qilib beraman.\n"
-        "✅ Imlo xatolarini ham to‘g‘rilab yuboraman."
-    )
-
-@app.on_message(filters.text & ~filters.command("start"))
-async def translate(client, message):
-    text = message.text
-    try:
-        lang = detect(text)
-    except:
-        return await message.reply("Tilni aniqlay olmadim. Iltimos, aniqroq yozing.")
-
-    corrected_words = [spell.correction(w) for w in text.split()]
-    corrected_text = " ".join(corrected_words)
-
-    result = ""
-    for target_lang in ["uz", "en", "ru"]:
-        if lang != target_lang:
-            translated = translator.translate(corrected_text, src=lang, dest=target_lang)
-            result += f"✏️ {target_lang.upper()}:\n{translated.text}\n\n"
-
-    await message.reply(result.strip())
+def start(client, message):
+    message.reply("Assalomu alaykum! Men sizga musiqalar topishda yordam beraman 🎵")
 
 app.run()
